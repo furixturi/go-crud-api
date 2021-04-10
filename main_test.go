@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 
 func TestEmptyTable(t *testing.T) {
 	clearTable()
-	req, _ := http.NewRequest("Get", "/products", nil)
+	req, _ := http.NewRequest("GET", "/products", nil)
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 
@@ -41,7 +41,7 @@ func TestEmptyTable(t *testing.T) {
 
 func TestGetNonExistentProduct(t *testing.T) {
 	clearTable()
-	req, _ := http.NewRequest("GET", "/product/11", nil)
+	req, _ := http.NewRequest("GET", "/products/11", nil)
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusNotFound, response.Code)
@@ -57,7 +57,7 @@ func TestCreateProduct(t *testing.T) {
 	clearTable()
 
 	var jsonStr = []byte(`{"name":"test product", "price": 11.22}`)
-	req, _ := http.NewRequest("POST", "/product", bytes.NewBuffer(jsonStr))
+	req, _ := http.NewRequest("POST", "/products", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusCreated, response.Code)
